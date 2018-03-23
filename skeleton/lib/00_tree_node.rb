@@ -27,4 +27,33 @@ class PolyTreeNode
     @children.delete(child_node)
     child_node.parent = nil
   end
+
+  def dfs(target_value)
+    return nil if self.nil?
+    return self if target_value == @value
+    @children.each do |x|
+      result = x.dfs(target_value)
+      return result unless result.nil?
+    end
+    nil
+  end
+
+  def bfs(target_value)
+    tree_queue = [self]
+    until tree_queue.empty?
+      el = tree_queue.shift
+      return el if el.value == target_value
+      el.children.each do |child|
+        tree_queue << child
+      end
+    end
+  end
 end
+
+#
+# n1 = PolyTreeNode.new("root1")
+# n2 = PolyTreeNode.new("root2")
+# n3 = PolyTreeNode.new("root3")
+# n4 = PolyTreeNode.new("root4")
+# n5 = PolyTreeNode.new("root5")
+# n6 = PolyTreeNode.new("root6")
